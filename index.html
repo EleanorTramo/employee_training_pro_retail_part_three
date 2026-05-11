@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Employee Training Pro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #0f0e0d;
+      --paper: #f5f0e8;
+      --accent: #d94f2b;
+      --accent2: #2b6fd9;
+      --muted: #7a7060;
+      --card: #fffcf6;
+      --border: #ddd5c0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: var(--paper);
+      border-bottom: 1.5px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--muted);
+      font-size: 0.88rem; font-weight: 500; letter-spacing: 0.04em;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 80px;
+    }
+    .hero-left {
+      padding: 6rem 3rem 4rem 3rem;
+      display: flex; flex-direction: column; justify-content: center;
+      border-right: 1.5px solid var(--border);
+    }
+    .hero-tag {
+      display: inline-block;
+      background: var(--accent); color: #fff;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 0.3rem 0.75rem;
+      margin-bottom: 2rem;
+    }
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 800; line-height: 1.0;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title em { font-style: normal; color: var(--accent); }
+    .hero-sub {
+      font-size: 1.05rem; color: var(--muted);
+      max-width: 480px; margin-bottom: 2.5rem;
+      font-weight: 300; line-height: 1.7;
+    }
+    .hero-cta {
+      display: inline-block;
+      background: var(--ink); color: var(--paper);
+      padding: 0.9rem 2.2rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: 0.9rem;
+      letter-spacing: 0.04em; text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .hero-cta:hover { background: var(--accent); transform: translateY(-2px); }
+
+    .hero-right {
+      padding: 6rem 3rem 4rem 3rem;
+      display: flex; flex-direction: column; justify-content: center;
+      gap: 2rem;
+    }
+    .stat-block { border-left: 3px solid var(--accent); padding-left: 1.2rem; }
+    .stat-block .num {
+      font-family: 'Syne', sans-serif; font-size: 3rem;
+      font-weight: 800; line-height: 1; color: var(--ink);
+    }
+    .stat-block .label { font-size: 0.85rem; color: var(--muted); margin-top: 0.25rem; }
+
+    /* SECTION BASE */
+    section { padding: 6rem 3rem; }
+    .section-label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 800; line-height: 1.1;
+      letter-spacing: -0.02em; margin-bottom: 1.5rem;
+    }
+    .section-body { font-size: 1rem; color: var(--muted); max-width: 620px; line-height: 1.75; }
+
+    /* PROBLEM */
+    #problem {
+      background: var(--ink); color: var(--paper);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+      align-items: center;
+    }
+    #problem .section-label { color: #d94f2b; }
+    #problem .section-body { color: #b0a898; }
+    .problem-callout {
+      background: #1e1c19;
+      border: 1.5px solid #333;
+      padding: 2rem;
+    }
+    .problem-callout p {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.3rem; font-weight: 700;
+      line-height: 1.4; color: var(--paper);
+    }
+    .problem-callout p em { color: var(--accent); font-style: normal; }
+
+    /* USER */
+    #user { border-top: 1.5px solid var(--border); }
+    .user-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
+    .user-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      padding: 2rem;
+      position: relative;
+    }
+    .user-card::before {
+      content: attr(data-label);
+      position: absolute; top: -1px; left: -1px;
+      background: var(--accent); color: #fff;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.2rem 0.6rem;
+    }
+    .user-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem; font-weight: 700; margin: 1.5rem 0 0.75rem;
+    }
+    .user-card p { font-size: 0.92rem; color: var(--muted); line-height: 1.65; }
+
+    /* AI FACTORY */
+    #how {
+      background: #f0ebe0;
+      border-top: 1.5px solid var(--border);
+      border-bottom: 1.5px solid var(--border);
+    }
+    .factory-steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin-top: 3rem; }
+    .factory-step {
+      border: 1.5px solid var(--border);
+      padding: 1.75rem 1.25rem;
+      background: var(--card);
+      position: relative;
+    }
+    .factory-step:not(:last-child)::after {
+      content: '→';
+      position: absolute; right: -0.7rem; top: 50%;
+      transform: translateY(-50%);
+      font-size: 1rem; color: var(--accent); z-index: 2;
+      background: var(--paper); padding: 0 0.2rem;
+    }
+    .step-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem; font-weight: 800; color: var(--border);
+      line-height: 1;
+    }
+    .step-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.85rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      margin: 0.5rem 0; color: var(--accent);
+    }
+    .step-body { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+    /* RISK */
+    #risk { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .risk-box {
+      background: #fff5f3;
+      border: 2px solid var(--accent);
+      padding: 2rem;
+      margin-top: 2rem;
+    }
+    .risk-box h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .risk-box h3::before { content: '⚠'; font-size: 1rem; }
+    .risk-box p { font-size: 0.92rem; color: #7a3020; line-height: 1.7; }
+
+    /* CONCEPTS */
+    #concepts { border-top: 1.5px solid var(--border); background: var(--card); }
+    .concepts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
+    .concept-card {
+      border: 1.5px solid var(--border); padding: 2rem;
+      background: var(--paper);
+    }
+    .concept-tag {
+      display: inline-block;
+      background: var(--accent2); color: #fff;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.2rem 0.6rem; margin-bottom: 1rem;
+    }
+    .concept-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem; font-weight: 800; margin-bottom: 0.75rem;
+    }
+    .concept-card p { font-size: 0.92rem; color: var(--muted); line-height: 1.7; }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink); color: #b0a898;
+      padding: 3rem; text-align: center;
+      font-size: 0.85rem;
+    }
+    footer strong { color: var(--paper); font-family: 'Syne', sans-serif; }
+
+    /* ANIMATIONS */
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-left { border-right: none; border-bottom: 1.5px solid var(--border); padding: 5rem 1.5rem 3rem; }
+      .hero-right { padding: 2rem 1.5rem; flex-direction: row; flex-wrap: wrap; gap: 1.5rem; }
+      section { padding: 4rem 1.5rem; }
+      #problem, #risk { grid-template-columns: 1fr; gap: 2rem; }
+      .user-grid, .concepts-grid { grid-template-columns: 1fr; }
+      .factory-steps { grid-template-columns: 1fr; }
+      .factory-step:not(:last-child)::after { content: '↓'; right: 50%; bottom: -0.9rem; top: auto; transform: translateX(50%); }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">Employee Training <span>Pro</span></div>
+    <ul class="nav-links">
+      <li><a href="#problem">Problem</a></li>
+      <li><a href="#user">The User</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#risk">Risk</a></li>
+      <li><a href="#concepts">Concepts</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left fade-in">
+      <div class="hero-tag">Business Case</div>
+      <h1 class="hero-title">Train smarter.<br>Onboard <em>faster.</em></h1>
+      <p class="hero-sub">Employee Training Pro is an AI-powered onboarding tool that gives new retail employees a simulated one-on-one training experience — so managers can get back to what matters.</p>
+      <a href="#problem" class="hero-cta">See the Case →</a>
+    </div>
+    <div class="hero-right fade-in">
+      <div class="stat-block">
+        <div class="num">100%</div>
+        <div class="label">Store-specific training — tailored to your retail environment</div>
+      </div>
+      <div class="stat-block">
+        <div class="num">0</div>
+        <div class="label">Hours of manager time needed for basic employee onboarding</div>
+      </div>
+      <div class="stat-block">
+        <div class="num">Day 1</div>
+        <div class="label">New employees are job-ready before they ever hit the floor</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section id="problem">
+    <div class="fade-in">
+      <div class="section-label">The Problem</div>
+      <h2 class="section-title" style="color: var(--paper);">Managers don't have time to train. New employees don't know where to start.</h2>
+      <p class="section-body">Retail managers are stretched thin. When a new hire walks in, there's no bandwidth for hand-holding — but leaving someone to figure it out alone leads to poor customer interactions and frustrated employees. Employee Training Pro closes that gap.</p>
+    </div>
+    <div class="problem-callout fade-in">
+      <p>"Before using this prototype, a new employee won't know what their daily basic tasks are — or what a <em>typical customer interaction</em> even looks like."</p>
+    </div>
+  </section>
+
+  <!-- USER -->
+  <section id="user">
+    <div class="section-label">The User</div>
+    <h2 class="section-title">Built for the new hire on day one.</h2>
+    <p class="section-body">The target user is a new retail employee working directly with customers — someone who needs real context fast, without pulling the manager away from their job.</p>
+    <div class="user-grid">
+      <div class="user-card fade-in" data-label="Before">
+        <h3>Without Employee Training Pro</h3>
+        <p>The new employee doesn't know what their daily tasks are. They have no mental model of what a typical customer interaction looks like. They rely entirely on manager availability — which is rarely guaranteed.</p>
+      </div>
+      <div class="user-card fade-in" data-label="After">
+        <h3>With Employee Training Pro</h3>
+        <p>The employee completes AI-guided modules on store tasks, daily workflows, and customer service scenarios. They arrive on the floor with confidence, context, and a clear idea of what needs to get done — ready to learn by doing.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <div class="section-label">How It Works</div>
+    <h2 class="section-title">The AI Factory</h2>
+    <p class="section-body">Five stages power Employee Training Pro — from raw store data to real employee value.</p>
+    <div class="factory-steps">
+      <div class="factory-step fade-in">
+        <div class="step-num">01</div>
+        <div class="step-title">Data</div>
+        <p class="step-body">AI is trained on store-specific tasks, daily workflows, and common customer service scenarios relevant to each retail environment.</p>
+      </div>
+      <div class="factory-step fade-in">
+        <div class="step-num">02</div>
+        <div class="step-title">Model</div>
+        <p class="step-body">The AI answers employee questions as if it's a knowledgeable manager, guiding individuals through modules at their own pace.</p>
+      </div>
+      <div class="factory-step fade-in">
+        <div class="step-num">03</div>
+        <div class="step-title">Prediction</div>
+        <p class="step-body">Incorporates everything a new employee needs to know before working on the floor — anticipating gaps before they become mistakes.</p>
+      </div>
+      <div class="factory-step fade-in">
+        <div class="step-num">04</div>
+        <div class="step-title">Decision</div>
+        <p class="step-body">Based on employee responses and questions, the AI adapts its training pace and tone to match each individual learner.</p>
+      </div>
+      <div class="factory-step fade-in">
+        <div class="step-num">05</div>
+        <div class="step-title">Value</div>
+        <p class="step-body">Managers save significant time. New employees get personalized, simulated one-on-one training — and arrive ready to contribute.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RISK -->
+  <section id="risk">
+    <div class="fade-in">
+      <div class="section-label">Biggest Risk</div>
+      <h2 class="section-title">What happens when the training is wrong?</h2>
+      <p class="section-body">No prototype is without failure points. Identifying the specific scenario where things break down is how we build safeguards before they're needed.</p>
+    </div>
+    <div class="fade-in">
+      <div class="risk-box">
+        <h3>Outdated Policy Scenario</h3>
+        <p>If the AI is trained on outdated store policies — such as a return policy or safety procedure that has since changed — a new employee could confidently apply the wrong information with a real customer. The employee gets hurt most directly, facing correction or discipline for a mistake that wasn't their fault. The manager and store also suffer, as a bad customer interaction caused by misinformation undermines the very problem this tool was built to solve.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONCEPTS -->
+  <section id="concepts">
+    <div class="section-label">Course Concepts</div>
+    <h2 class="section-title">Where theory meets the prototype.</h2>
+    <p class="section-body">Two core AI concepts show up directly in how Employee Training Pro works — and where it's vulnerable.</p>
+    <div class="concepts-grid">
+      <div class="concept-card fade-in">
+        <div class="concept-tag">Concept 01</div>
+        <h3>Data Dependency</h3>
+        <p>This connects directly to the biggest risk. Employee Training Pro is only as reliable as the store-specific data it was trained on. If a retail store provides incomplete, outdated, or poorly organized policy documentation during setup, the AI will confidently train new employees on a flawed foundation. A small boutique with no formal written procedures may produce a far weaker training experience than a structured chain store — creating unequal outcomes based on how well-documented each employer already is.</p>
+      </div>
+      <div class="concept-card fade-in">
+        <div class="concept-tag">Concept 02</div>
+        <h3>Human-in-the-Loop</h3>
+        <p>Freeing up manager time is the core value of this tool — but that same freedom creates a critical blind spot. With no built-in checkpoint, an employee could be learning the wrong things without any human catching it. The manager stepping away is exactly what removes the safety net. To work responsibly, Employee Training Pro needs a lightweight human-in-the-loop mechanism — such as a manager review flag or an end-of-module quiz — so oversight isn't fully traded away in the name of efficiency.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <strong>Employee Training Pro</strong><br />
+    An AI-powered onboarding solution for retail — built to save manager time and set new employees up for success.
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
